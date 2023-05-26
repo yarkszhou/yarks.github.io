@@ -1,0 +1,379 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>yarks</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yarks.github.io/favicon.ico?v=1685101988123">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://yarks.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://yarks.github.io">
+        <img class="avatar" src="https://yarks.github.io/images/avatar.png?v=1685101988123" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://yarks.github.io">
+        <h1 class="site-title">yarks</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://yarks.github.io/post/hello-gridea" class="menu" target="_blank">
+            文章
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://yarks.github.io/post/openwrt-bian-yi-jiao-cheng/">
+        <h2 class="post-title">OpenWrt编译教程</h2>
+      </a>
+      <div class="post-abstract">
+        <p><img src="https://yarks.github.io/post-images/1685098731738.png" alt="" loading="lazy">OpenWrt编译教程<br>
+Lean源码：https://github.com/coolsnowwolf/lede<br>
+官方源码：https://github.com/openwrt/openwrt.git<br>
+官方定制：https://firmware-selector.openwrt.org<br>
+1、基本编译教程：<br>
+sudo apt update -y<br>
+<img src="https://yarks.github.io/post-images/1685098741228.jpg" alt="" loading="lazy"><br>
+sudo apt full-upgrade -y<br>
+sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential <br>
+bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib <br>
+git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev <br>
+libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz <br>
+mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools <br>
+libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip <br>
+vim wget xmlto xxd zlib1g-dev</p>
+<p>git clone https://github.com/coolsnowwolf/lede<br>
+官方源码 git clone https://git.openwrt.org/openwrt/openwrt.git<br>
+天灵源码 git clone -b 你想要拉的分支--single-branch<br>
+https://github.com/immortalwrt/immortalwrt<br>
+#末尾加了openwrt是指克隆代码到openwrt目录，目的是为了规范化，因为有时并不是编译这个的源码。</p>
+<p>cd lede<br>
+进目录缝合第三方插件feeds源 :https://github.com/kenzok8/openwrt-packages<br>
+在lede源码根目录 feeds.conf.default 文件里添加下面代码<br>
+src-git kenzo https://github.com/kenzok8/openwrt-packages<br>
+src-git small https://github.com/kenzok8/small<br>
+git clone https://github.com/sirpdboy/chatgpt-web.git package/luci-app-chatgpt<br>
+feeds 是扩展的软件包，独立于Open­Wrt源码之外，所以要单独进行拉取和更新</p>
+<p>./scripts/feeds update -a  （更新feeds源）<br>
+./scripts/feeds install -a   （安装feeds源）<br>
+make menuconfig          配置文件设置</p>
+<p>make -j24 download V=s  下载dl（依赖）库（国内请尽量全局科学上网）<br>
+make -j1 download V=s  （单线程下载）<br>
+make -j1 V=s           （单线程编译） V=s：输出详细日志<br>
+2、二次编译 （不改配置功能和插件，仅升级）<br>
+cd lede             #进入目录<br>
+git pull             #更新源码<br>
+./scripts/feeds update -a &amp;&amp; ./scripts/feeds install -a #更新和安装软件<br>
+make clean    #源码有大规模更新或者内核更新后执行，以保证编译质量<br>
+#此操作会删除 /bin 和 /build_dir 目录中的文件<br>
+make dirclean #更换架构编译前必须执行<br>
+#此操作会删除 /bin 和 /build_dir 目录的中的文件（make clean），<br>
+以及 /staging_dir、/toolchain、/tmp 和 /logs 中的文件.<br>
+rm -rf ./tmp &amp;&amp; rm -rf .config   #清除编译配置和缓存</p>
+<p>make defconfig              #检测编译环境并生成默认的编译配置文件<br>
+make -j24 download V=s          #下载DL（依赖）库，也可提前下载导进去<br>
+make -j<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mo>(</mo></mrow><annotation encoding="application/x-tex">((</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mopen">(</span></span></span></span>(nproc) + 1)) V=s   #开始编译<br>
+make -j<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;#&#039; at position 38: … make -j1 V=s 
+#̲多线程编译失败后自动进入单线程…'>(nproc) || make -j1 || make -j1 V=s 
+#多线程编译失败后自动进入单线程编译，失败则输出详细日志
+rm -rf tmp                 #清理临时文件（删除执行make menuconfig后产生的临时文件，包括一些软件检索信息，删除后会重新加载package目录下的软件包。若不删除会导致一些新加入的软件包不显示） 
+rm -f .config                #删除编译配置文件（在不删除的情况下如果取消选择某些组件它的依赖组件不会自动取消，所以对于需要调整组件的情况下建议删除） 
+find dl -size -1024c -exec ls -l {} \; #检查文件完整性（此命令可以列出下载不完整的文件（多次编译经验得出小于1k的文件属于下载不完整），如存在这样的文件可以使用find dl -size -1024c -exec rm -f {} \;此命令将它们删除，然后重新执行make download下载并反复检查，确认所有文件完整可大大提高编译成功率，避免浪费时间）
+3、更改配置编译：
+cd lede
+rm -rf ./tmp &amp;&amp; rm -rf .config        #清除临时文件和编译配置文件
+make menuconfig                         
+make -j</span>((<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>n</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>c</mi><mo>)</mo><mo>+</mo><mn>1</mn><mo>)</mo><mo>)</mo><mi>V</mi><mo>=</mo><mi>s</mi><mi>m</mi><mi>a</mi><mi>k</mi><mi>e</mi><mo>−</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">(nproc) + 1)) V=s
+make -j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">)</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>(nproc) || make -j1 || make -j1 V=s<br>
+#多线程编译失败后自动进入单线程编译，失败则输出详细日志<br>
+3.1更改LAN口的默认IP地址：<br>
+cd lede<br>
+vim package/base-files/files/bin/config_generate<br>
+3.2编译完成后输出路径：<br>
+固件：/lede/bin/targets<br>
+插件：/lede/bin/packages</p>
+<p>3.3编译切换内核：<br>
+打开 lede/target/linux/x86/Makefile<br>
+KERNEL_PATCHVER:=6.1<br>
+具体支持内核版本<br>
+include/kernel-version.mk<br>
+3.4固件设置空密码：<br>
+方法一：打开lede /package/lean/default-settings/files/zzz-default-settings<br>
+删掉加密算法后的数字即可</p>
+<p>方法二：首先要在装好的openwrt系统上设置一个你想要的密码，设置完后查看输入命令查看密码文件：<br>
+cat /etc/shadow<br>
+然后会输出密码文件信息：<br>
+root:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>HSk7yPlb$6cPCTE8gYv2AxBvGdwCgS/:17949:0:99999:7:::<br>
+daemon:<em>:0:0:99999:7:::<br>
+ftp:</em>:0:0:99999:7:::<br>
+network:<em>:0:0:99999:7:::<br>
+nobody:</em>:0:0:99999:7:::<br>
+aria2❌0:0:99999:7:::<br>
+dnsmasq❌0:0:99999:7:::<br>
+dnsmasq❌0:0:99999:7:::<br>
+上段代码第一行“root:XXXXXXXX”复制到openwrt源码文件里替换后，然后开始编译：<br>
+package/base-files/files/etc/shadow<br>
+3.5单独编译某个插件:<br>
+进入cd lede<br>
+git clone https://github.com/rosywrt/luci-theme-rosy.git<br>
+make menuconfig<br>
+进入 LuCI --&gt; Themes 选项找到 luci-theme-rosy<br>
+在编译配置菜单中选择luci-theme-rosy<br>
+然后配置该选项为 'M'，保存退出。M 表示选中插件但不编译进固件。<br>
+make package/luci-theme-rosy/compile V=99<br>
+注：V=99 表示输出详细的 debug 信息<br>
+x86_64 架构，编译完成插件包默认存放路径：~/lede/bin/packages/x86_64/base</p>
+<p>4、个性化设置：<br>
+4.2添加天气<br>
+代码里面的 py= 后面拼音改成你城市的地区拼音</p>
+<tr><td width="10%"><%:weather%></td><td > <iframe width="900" height="120" frameborder="0" scrolling="no" hspace="0" src="//i.tianqi.com/?c=code&a=getcode&id=22&py=jiangning&icon=1"></iframe>
+<tr><td width="10%"><%:Urban weather%></td><td > <iframe width="900" height="120" frameborder="0" scrolling="no" hspace="0" src="//i.tianqi.com/?c=code&a=getcode&id=22&py=nanjing&icon=1"></iframe>
+<tr><td width="10%"><%:index%></td><td > <iframe width="400" height="270" frameborder="0" scrolling="no" hspace="0" src="https://i.tianqi.com/?c=code&a=getcode&id=27&py=jiangning&icon=1"></iframe><iframe width="400" height="270" frameborder="0" scrolling="no" hspace="0" src="https://i.tianqi.com/?c=code&a=getcode&id=27&py=nanjing&icon=1"></iframe>
+4.3添加的代码汉化补充
+找到配置文件lede/feeds/luci/modules/luci-base/po/zh-cn/base.po末尾添加：
+msgid "Compiler author"
+msgstr "编译作者"
+<p>msgid &quot;index&quot;<br>
+msgstr &quot;指数&quot;</p>
+<p>msgid &quot;Urban weather&quot;<br>
+msgstr &quot;城市天气&quot;</p>
+<p>msgid &quot;weather&quot;<br>
+msgstr &quot;天气&quot;</p>
+<p>4.1添加作者<br>
+修改lede/package/lean/autocore/files/arm/index.htm<br>
+lede/package/lean/autocore/files/x86/index.htm<br>
+上述添加代码<tr><td width="33%">&lt;%:Compiler author%&gt;</td><td>yarks</td></tr></p>
+<p>4.4定制个性SSH登陆欢迎信息<br>
+修改文件 lede/package/base-files/files/etc/banner<br>
+到这定制 http://patorjk.com/software/taag/</p>
+<p>4.5修改默认主题<br>
+lede/feeds/luci/collections/luci/Makefile文件更改默认主题<br>
+lede/feeds/luci/collections/luci-ssl-nginx/Makefile<br>
+lede/feeds/luci/collections/luci-ssl-openssl/Makefile<br>
+这三个文件都要修改默认主题名字，不然后面编译可能会报错。<br>
+4.6修改登陆名称和密码<br>
+openwrt 系统默认的用户名是 root，并且 web 页登录页面也默认是填充用户名 root 的状态，所以在考虑到安全性以及自己的个性，所以需要自己制定自己喜欢的用户名。<br>
+4.6.1、openwrt 开发板上修改root用户名<br>
+1、/etc/passwd<br>
+root❌0:0:root:/root:/bin/ash<br>
+修改成<br>
+name❌0:0:root:/root:/bin/ash<br>
+2、/etc/shadow<br>
+root:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>CUZfPWNP$jl8w3/uwU/qtjjBfa.urF/:18216:0:99999:7:::<br>
+修改成<br>
+name:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>CUZfPWNP<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mi>l</mi><mn>8</mn><mi>w</mi><mn>3</mn><mi mathvariant="normal">/</mi><mi>u</mi><mi>w</mi><mi>U</mi><mi mathvariant="normal">/</mi><mi>q</mi><mi>t</mi><mi>j</mi><mi>j</mi><mi>B</mi><mi>f</mi><mi>a</mi><mi mathvariant="normal">.</mi><mi>u</mi><mi>r</mi><mi>F</mi><mi mathvariant="normal">/</mi><mo>:</mo><mn>18216</mn><mo>:</mo><mn>0</mn><mo>:</mo><mn>99999</mn><mo>:</mo><mn>7</mn><mo>:</mo><mo>:</mo><mo>:</mo><mn>3</mn><mi mathvariant="normal">、</mi><mi mathvariant="normal">/</mi><mi>u</mi><mi>s</mi><mi>r</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>i</mi><mi>b</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>u</mi><mi>a</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>u</mi><mi>c</mi><mi>i</mi><mi mathvariant="normal">/</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>r</mi><mi mathvariant="normal">/</mi><mi>a</mi><mi>d</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi mathvariant="normal">/</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>x</mi><mi mathvariant="normal">.</mi><mi>l</mi><mi>u</mi><mi>a</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><msub><mo>=</mo><mo>(</mo></msub><mi mathvariant="normal">&quot;</mi><mi>A</mi><mi>d</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi mathvariant="normal">&quot;</mi><mo>)</mo><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo>=</mo><mn>10</mn><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>s</mi><mi>y</mi><mi>s</mi><mi>a</mi><mi>u</mi><mi>t</mi><mi>h</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mi mathvariant="normal">&quot;</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>s</mi><mi>y</mi><mi>s</mi><mi>a</mi><mi>u</mi><mi>t</mi><msub><mi>h</mi><mi>a</mi></msub><mi>u</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>h</mi><mi>t</mi><mi>m</mi><mi>l</mi><mi>a</mi><mi>u</mi><mi>t</mi><mi>h</mi><mi mathvariant="normal">&quot;</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>u</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi><mo>=</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>x</mi><mo>=</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>t</mi><mo>=</mo><mi>f</mi><mi>i</mi><mi>r</mi><mi>s</mi><mi>t</mi><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>(</mo><mo>)</mo><mi mathvariant="normal">修</mi><mi mathvariant="normal">改</mi><mi mathvariant="normal">成</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><msub><mo>=</mo><mo>(</mo></msub><mi mathvariant="normal">&quot;</mi><mi>A</mi><mi>d</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi mathvariant="normal">&quot;</mi><mo>)</mo><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>e</mi><mi>r</mi><mo>=</mo><mn>10</mn><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>s</mi><mi>y</mi><mi>s</mi><mi>a</mi><mi>u</mi><mi>t</mi><mi>h</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi mathvariant="normal">&quot;</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>s</mi><mi>y</mi><mi>s</mi><mi>a</mi><mi>u</mi><mi>t</mi><msub><mi>h</mi><mi>a</mi></msub><mi>u</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>h</mi><mi>t</mi><mi>m</mi><mi>l</mi><mi>a</mi><mi>u</mi><mi>t</mi><mi>h</mi><mi mathvariant="normal">&quot;</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>u</mi><mi>c</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi><mo>=</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>x</mi><mo>=</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>t</mi><mo>=</mo><mi>f</mi><mi>i</mi><mi>r</mi><mi>s</mi><mi>t</mi><mi>n</mi><mi>o</mi><mi>d</mi><mi>e</mi><mo>(</mo><mo>)</mo><mn>4</mn><mi mathvariant="normal">、</mi><mi mathvariant="normal">/</mi><mi>e</mi><mi>t</mi><mi>c</mi><mi mathvariant="normal">/</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>f</mi><mi>i</mi><mi>g</mi><mi mathvariant="normal">/</mi><mi>r</mi><mi>p</mi><mi>c</mi><mi>d</mi><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>u</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>n</mi><mi>a</mi><mi>m</mi><msup><mi>e</mi><mo mathvariant="normal">′</mo></msup><mi>r</mi><mi>o</mi><mi>o</mi><msup><mi>t</mi><mo mathvariant="normal">′</mo></msup><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>p</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>w</mi><mi>o</mi><mi>r</mi><msup><mi>d</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">jl8w3/uwU/qtjjBfa.urF/:18216:0:99999:7:::
+3、/usr/lib/lua/luci/controller/admin/index.lua
+page.title   = _(&quot;Administration&quot;)    
+page.order   = 10
+page.sysauth = &quot;root&quot;
+page.sysauth_authenticator = &quot;htmlauth&quot;
+page.ucidata = true
+page.index = true
+page.target = firstnode()
+修改成
+    page.title   = _(&quot;Administration&quot;)
+page.order   = 10
+page.sysauth = &quot;name&quot;
+page.sysauth_authenticator = &quot;htmlauth&quot;
+page.ucidata = true
+page.index = true
+page.target = firstnode()
+4、/etc/config/rpcd
+    option username &#x27;root&#x27;
+option password &#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord">3</span><span class="mord">/</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">a</span><span class="mord">.</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord">/</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">8</span><span class="mord">2</span><span class="mord">1</span><span class="mord">6</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">9</span><span class="mord">9</span><span class="mord">9</span><span class="mord">9</span><span class="mord">9</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1052em;vertical-align:-0.3551999999999999em;"></span><span class="mord">3</span><span class="mord cjk_fallback">、</span><span class="mord">/</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">b</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">i</span><span class="mord">/</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord">/</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel">=</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mopen mtight">(</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">A</span><span class="mord mathdefault">d</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord">&quot;</span><span class="mclose">)</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">s</span><span class="mord mathdefault">a</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">&quot;</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mord">&quot;</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">s</span><span class="mord mathdefault">a</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord">&quot;</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1052em;vertical-align:-0.3551999999999999em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span><span class="mord cjk_fallback">修</span><span class="mord cjk_fallback">改</span><span class="mord cjk_fallback">成</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel">=</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mopen mtight">(</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">A</span><span class="mord mathdefault">d</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord">&quot;</span><span class="mclose">)</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">s</span><span class="mord mathdefault">a</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord">&quot;</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">s</span><span class="mord mathdefault">a</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord">&quot;</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span><span class="mord">4</span><span class="mord cjk_fallback">、</span><span class="mord">/</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">c</span><span class="mord">/</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">p</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>p<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>o</mi><mi>o</mi><msup><mi>t</mi><mo mathvariant="normal">′</mo></msup><mi mathvariant="normal">修</mi><mi mathvariant="normal">改</mi><mi mathvariant="normal">成</mi><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>u</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>n</mi><mi>a</mi><mi>m</mi><msup><mi>e</mi><mo mathvariant="normal">′</mo></msup><mi>n</mi><mi>a</mi><mi>m</mi><msup><mi>e</mi><mo mathvariant="normal">′</mo></msup><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>p</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi>w</mi><mi>o</mi><mi>r</mi><msup><mi>d</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">root&#x27;
+修改成
+option username &#x27;name&#x27;
+option password &#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.946332em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord cjk_fallback">修</span><span class="mord cjk_fallback">改</span><span class="mord cjk_fallback">成</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>p<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;#&#039; at position 981: …ibexec/login
+1 #̲!/bin/sh2 [ &quot;'>name&#039;
+至此，简单的用户名修改已经完成修改。如果需要 web 登录页面不自动填写用户名，那么只需要修改：
+5、/usr/lib/lua/luci/view/sysauth.htm
+ &lt;input class=&quot;cbi-input-text&quot; type=&quot;text&quot; name=&quot;luci_username&quot; value=&quot;&lt;%=duser%&quot; /&gt;
+修改成
+ &lt;input class=&quot;cbi-input-text&quot; type=&quot;text&quot; name=&quot;luci_username&quot; value=&quot;&quot; /&gt;
+4.6.2、在开发环境源码中修改用户名（下面的步骤与上面在开发板上修改的步骤一一对应）
+1、./openwrt/package/base-files/files/etc/passwd
+2、./openwrt/package/base-files/files/etc/shadow
+3、./openwrt/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua
+4、./openwrt/package/system/rpcd/files/rpcd.config
+5、./openwrt/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm
+这样，在编译完成后烧写到开发板上，还是修改后的名称，在网页端显示的也是。完成修改。
+4.6.3、修改 openwrt 的主机名（以 username 为例）
+1、在开发板上修改
+将 /etc/config/system 中的
+1 option hostname OpenWrt
+2 option timezone    UTC
+修改成 
+1 option hostname username
+2 option timezone    UTC
+然后 reboot 重启即可。
+ 2、在开发源码中修改文件
+        ./openwrt/package/base-files/files/etc/config/system
+ 修改方式与上面相同。
+4.6.4、通过串口工具进入 openwrt 终端需要用户名和密码
+1、在开发板上修改
+将文件 /usr/libexec/login
+1 #!/bin/sh2 [ &quot;</span>(uci -q get system.@system[0].ttylogin)&quot; = 1 ] || exec /bin/ash --login3 exec /bin/login<br>
+修改成<br>
+1 #!/bin/sh2 [ &quot;$(uci -q get system.@system[0].ttylogin)&quot; = 1 ] || exec /bin/login3 exec /bin/login<br>
+2、在编译源码中修改文件<br>
+        ./package/base-files/files/usr/libexec/login.sh<br>
+修改方式与上述相同。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-05-26</span>
+        
+      </div>
+    </div>
+    
+      <a href="https://yarks.github.io/post/openwrt-bian-yi-jiao-cheng/">
+        <div class="feature-container" style="background-image: url('https://yarks.github.io/post-images/openwrt-bian-yi-jiao-cheng.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://yarks.github.io/post/hello-gridea/">
+        <h2 class="post-title">Hello Gridea</h2>
+      </a>
+      <div class="post-abstract">
+        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2018-12-12</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://yarks.github.io/tag/4PR5a1-Hy/">
+                Gridea
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://yarks.github.io/post/hello-gridea/">
+        <div class="feature-container" style="background-image: url('https://yarks.github.io/post-images/hello-gridea.png')">
+        </div>
+      </a>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://yarks.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
